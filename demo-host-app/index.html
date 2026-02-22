@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopFast - Host App Demo</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --border: #e2e8f0;
+            --success: #10b981;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        .card {
+            background: var(--card);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            border: 1px solid var(--border);
+        }
+        h1, h2, h3 { margin-top: 0; }
+        .product {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        input, select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            box-sizing: border-box;
+            background: var(--bg);
+        }
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 1rem;
+            width: 100%;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: background 0.2s;
+        }
+        .btn:hover { background: #1d4ed8; }
+        .logic-panel {
+            background: #1e1e24;
+            color: #fff;
+            padding: 1.5rem;
+            border-radius: 12px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            white-space: pre-wrap;
+            display: none;
+        }
+        .logic-panel.active { display: block; }
+        .badge {
+            display: inline-block;
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+            vertical-align: middle;
+        }
+        .dev-notes {
+            grid-column: 1 / -1;
+            background: #fffbe2;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.95rem;
+        }
+        pre { background: #000; color: #fff; padding: 1rem; border-radius: 8px; overflow-x: auto; }
+        .strikethrough { text-decoration: line-through; color: #94a3b8; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="dev-notes">
+        <strong>Host App Demo:</strong> This simulates an external customer Application (e.g. an E-commerce store in PHP, Python, or standard HTML).<br/>
+        Notice how business logic (discounts, holidays) is completely missing from this codebase. It sends a generic JSON payload to <code>LogicSnap</code> via API.
+    </div>
+
+    <!-- Left Side: Standard App UI -->
+    <div class="card">
+        <h2>ShopFast Checkout</h2>
+        
+        <div class="product">
+            <div>
+                <strong>Premium Wireless Earbuds</strong>
+                <p style="margin: 0; color: #64748b; font-size: 0.9rem;">Qty: 1</p>
+            </div>
+            <div>
+                <strong id="priceDisplay">$120.00</strong>
+                <div id="newPriceDisplay" style="display: none; color: var(--success); font-weight: bold; font-size: 1.2rem;"></div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Customer Loyalty Tier</label>
+            <select id="userTier">
+                <option value="NEW">New User</option>
+                <option value="SILVER">Silver</option>
+                <option value="GOLD">Gold VIP</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Payment Method</label>
+            <select id="paymentMethod">
+                <option value="CREDIT_CARD">Credit Card</option>
+                <option value="PAYPAL">PayPal</option>
+            </select>
+        </div>
+
+        <button class="btn" onclick="evaluateCart()">Confirm Purchase</button>
+    </div>
+
+    <!-- Right Side: API Communication Viewer -->
+    <div class="card">
+        <h2>LogicSnap Integration</h2>
+        <p style="font-size: 0.9rem; color: #64748b;">What happens under the hood when a user checks out.</p>
+
+        <div id="beforeSubmit" style="margin-top: 2rem;">
+            <strong>Code snippet in host app:</strong>
+            <pre><code>// 1. Send unstructured Context Payload
+fetch('http://localhost:3000/api/evaluate', {
+  headers: { 'x-api-key': 'demo-host-key' },
+  body: JSON.stringify({
+    payload: {
+      cartTotal: 120,
+      userTier: user.tier
+    }
+  })
+});</code></pre>
+            <p style="font-size: 0.9rem;">Click "Confirm Purchase" to trigger the API evaluation.</p>
+        </div>
+
+        <div id="responsePanel" class="logic-panel"></div>
+    </div>
+</div>
+
+<script>
+    async function evaluateCart() {
+        // 1. Gather Generic Payload (Host apps just send whatever state they have)
+        const payload = {
+            cartTotal: 120.00,
+            userTier: document.getElementById('userTier').value,
+            paymentMethod: document.getElementById('paymentMethod').value,
+            timeOfPurchase: new Date().toISOString()
+        };
+
+        const responsePanel = document.getElementById('responsePanel');
+        responsePanel.classList.add('active');
+        responsePanel.innerHTML = `Sending Payload:\n${JSON.stringify(payload, null, 2)}\n\nWaiting for LogicSnap...`;
+
+        // 2. Transmit to LogicSnap
+        try {
+            const res = await fetch('http://localhost:3000/api/evaluate', {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'x-api-key': 'demo-host-key' // Triggering the fallback mock
+                },
+                body: JSON.stringify({ payload })
+            });
+
+            const data = await res.json();
+            
+            // 3. Process the Decision
+            if (data.evaluation && data.evaluation.triggeredRules > 0) {
+                responsePanel.innerHTML = `✅ LogicSnap Evaluation Complete:\n${JSON.stringify(data, null, 2)}`;
+                
+                // Parse Actions returned by LogicSnap
+                let finalPrice = payload.cartTotal;
+                
+                data.evaluation.actions.forEach(action => {
+                    if (action.type === 'DISCOUNT') {
+                        if (action.payload.type === 'PERCENTAGE') {
+                            const discount = finalPrice * (action.payload.value / 100);
+                            finalPrice = finalPrice - discount;
+                        }
+                    }
+                });
+
+                // Update UI based on LogicSnap response
+                document.getElementById('priceDisplay').classList.add('strikethrough');
+                document.getElementById('newPriceDisplay').style.display = 'block';
+                document.getElementById('newPriceDisplay').innerHTML = `$${finalPrice.toFixed(2)} <span class="badge">LogicSnap Discount Applied</span>`;
+
+            } else {
+                responsePanel.innerHTML = `✅ LogicSnap Evaluation Complete:\n\nNo rules triggered.\nAction: Proceed as normal.`;
+            }
+
+        } catch (e) {
+            responsePanel.innerHTML = `❌ Error connecting to LogicSnap API.\nMake sure the Next.js dev server is running on localhost:3000.`;
+            console.error(e);
+        }
+    }
+</script>
+
+</body>
+</html>
