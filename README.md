@@ -3,13 +3,10 @@
 ## 🏁 JUDGES: Quick Start
 
 1. Ensure you have Node.js v18+ installed.
-2. In the project root, run:
-   ```bash
-   npm run judge-setup
-   ```
-3. When prompted, enter the **Setup Password** provided to you by the team.
+2. Inside the project folder, **double-click the `START_DEMO.bat` file.**
+3. When the black window opens, wait for it to prompt you, then type the **Setup Password** provided to you by the team and hit Enter.
    *(This will securely decrypt the keys, install dependencies, seed demo data, and start the app automatically).*
-4. Open **http://localhost:3000** → click **"🔐 Developer Access"** → enter developer key: **`LOGICSNAP-DEMO`**
+4. Once it says the server is running, open **http://localhost:3000** → click **"🔐 Developer Access"** → enter developer key: **`LOGICSNAP-DEMO`**
 
 ---
 
