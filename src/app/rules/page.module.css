@@ -43,20 +43,20 @@
     overflow-x: auto;
 }
 
-table {
+.tableContainer table {
     width: 100%;
     border-collapse: collapse;
     text-align: left;
 }
 
-th {
+.tableContainer th {
     padding: 1rem;
     border-bottom: 2px solid var(--glass-border);
     color: var(--text-secondary);
     font-weight: 500;
 }
 
-td {
+.tableContainer td {
     padding: 1rem;
     border-bottom: 1px solid var(--glass-border);
     vertical-align: middle;

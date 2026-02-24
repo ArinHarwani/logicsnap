@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { LayoutDashboard, Zap, Target, Network, Coffee, LogOut } from "lucide-react";
+import { useState } from "react";
+import { LayoutDashboard, Zap, Target, Network, Coffee, LogOut, RefreshCw } from "lucide-react";
 
 const links = [
     { href: "/menu", label: "Live Cafe Menu", icon: Coffee },
@@ -15,10 +16,31 @@ const links = [
 export function Sidebar() {
     const pathname = usePathname();
     const router = useRouter();
+    const [isResetting, setIsResetting] = useState(false);
 
     const exitDevMode = () => {
         localStorage.removeItem('devMode');
         router.push('/');
+    };
+
+    const resetDemo = async () => {
+        if (!confirm("Are you sure you want to reset the demo data? This will clear all rules and events.")) return;
+
+        setIsResetting(true);
+        try {
+            const res = await fetch('/api/reset-demo', { method: 'POST' });
+            if (res.ok) {
+                alert("Demo data reset successfully!");
+                router.refresh(); // Refresh the current view to pick up new info
+            } else {
+                alert("Failed to reset demo data.");
+            }
+        } catch (error) {
+            console.error(error);
+            alert("Error resetting demo data.");
+        } finally {
+            setIsResetting(false);
+        }
     };
 
     return (
@@ -55,11 +77,15 @@ export function Sidebar() {
                     <div className="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-slate-600 font-bold text-xs">
                         AR
                     </div>
-                    <div className="text-sm">
-                        <div className="font-medium text-slate-800">Admin User</div>
-                        <div className="text-slate-500 text-xs">cafe_manager</div>
-                    </div>
                 </div>
+                <button
+                    onClick={resetDemo}
+                    disabled={isResetting}
+                    className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium text-slate-500 hover:bg-emerald-50 hover:text-emerald-700 transition-colors disabled:opacity-50"
+                >
+                    <RefreshCw className={`w-4 h-4 ${isResetting ? 'animate-spin' : ''}`} />
+                    {isResetting ? 'Resetting...' : 'Reset Demo'}
+                </button>
                 <button
                     onClick={exitDevMode}
                     className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium text-slate-500 hover:bg-red-50 hover:text-red-600 transition-colors"

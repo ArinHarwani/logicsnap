@@ -1,9 +1,15 @@
 # ⚡ LogicSnap — The Intelligent Cafe Pricing Engine
 
-## 🏁 JUDGES: Quick Start (One Click)
-> **Double-click `JUDGE_SETUP.bat`** in the project root.  
-> It auto-installs everything, seeds 600 demo orders, and opens the server.  
-> Then open **http://localhost:3000** → click **"🔐 Developer Access"** → enter key: **`LOGICSNAP-DEMO`**
+## 🏁 JUDGES: Quick Start
+
+1. Ensure you have Node.js v18+ installed.
+2. In the project root, run:
+   ```bash
+   npm run judge-setup
+   ```
+3. When prompted, enter the **Setup Password** provided to you by the team.
+   *(This will securely decrypt the keys, install dependencies, seed demo data, and start the app automatically).*
+4. Open **http://localhost:3000** → click **"🔐 Developer Access"** → enter developer key: **`LOGICSNAP-DEMO`**
 
 ---
 
@@ -71,23 +77,15 @@ The public-facing site is a normal cafe website. To access the developer dashboa
 git clone <repo-url>
 cd logic-snap
 
-# 2. Install dependencies
-npm install
+# 2. Run the secure setup utility
+npm run judge-setup
 
-# 3. Configure environment variables
-#    → Open JUDGES_KEYS.txt (included in this repo)
-#    → Copy .env.example to .env
-#    → Paste the keys from JUDGES_KEYS.txt into .env
-cp .env.example .env
-
-# 4. Seed demo data (required for full feature demo)
-node scripts/seed-demo.js
-
-# 5. Start the development server
-npm run dev
+# 3. Enter the setup password
+#    → The script will auto-decrypt the `.env` keys, 
+#      install dependencies, seed data, and start the server.
 ```
 
-> 📋 **All API keys are pre-provided in `JUDGES_KEYS.txt`** — no sign-ups required.
+> 📋 **Note:** You must obtain the **Setup Password** directly from the author. API keys are safely encrypted out of plain text.
 
 Open [http://localhost:3000](http://localhost:3000) to see the cafe homepage.
 

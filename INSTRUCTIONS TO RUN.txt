@@ -1,0 +1,97 @@
+=====================================================
+   LOGICSNAP CAFE — INSTRUCTIONS TO RUN
+   For Judges / Evaluators
+=====================================================
+
+PREREQUISITES (must be installed on your PC)
+----------------------------------------------
+1. Node.js version 18 or above
+   Download from: https://nodejs.org
+   (Check if already installed: open CMD and type "node -v")
+
+2. A modern browser (Chrome / Edge / Firefox)
+
+
+=====================================================
+STEP-BY-STEP SETUP
+=====================================================
+
+STEP 1 — Extract the Project
+-----------------------------
+   - Right-click the downloaded ZIP file
+   - Click "Extract All"
+   - Choose any folder (e.g. Desktop)
+   - Open the extracted folder
+
+STEP 2 — Run the Setup File
+-----------------------------
+   - Inside the extracted folder, find the file:
+         JUDGE_SETUP.bat
+   - Double-click it
+   - A black command window will open
+   - Wait for it to finish (takes about 1-3 minutes)
+   - You will see: "Starting server..." when it is done
+   - DO NOT close the command window
+
+STEP 3 — Open the App
+----------------------
+   - Open your browser
+   - Go to:  http://localhost:3000
+   - You will see the LogicSnap Cafe website
+
+
+=====================================================
+HOW TO ACCESS THE DEVELOPER DASHBOARD
+=====================================================
+
+   1. On the cafe homepage, look at the bottom-right corner
+   2. Click the button:  "Developer Access"
+   3. A popup will appear asking for an API key
+   4. Type this key exactly:   LOGICSNAP-DEMO
+   5. Press "Access Dashboard"
+   6. The full developer dashboard will open
+
+
+=====================================================
+   FEATURES TO EXPLORE IN THE DASHBOARD
+=====================================================
+
+   LIVE CAFE MENU      → See menu prices update live
+   AI RULE GENERATOR   → Type a pricing rule in plain English,
+                         AI converts it to a rule and deploys it
+   LIVE DEMAND SURGE   → Click "Simulate Morning Rush"  
+                         Watch Cold Brew get surge priced in 
+                         real time. Check Live Menu to see 
+                         it reflected immediately
+   BACKTEST SIMULATOR  → Choose any item, set a discount/markup,
+                         click "Run Shadow Test" to see how it 
+                         would have affected the last 600 orders
+   BLAST RADIUS MAP    → Click "Scan Architecture" to see a 
+                         live graph of all rules and detect 
+                         any rule conflicts
+
+
+=====================================================
+TO EXIT DEVELOPER MODE
+=====================================================
+
+   - Click "Exit Developer Mode" at the bottom of the
+     left sidebar
+   - You are taken back to the normal cafe website
+
+
+=====================================================
+IF SOMETHING GOES WRONG
+=====================================================
+
+   - Make sure Node.js is installed (node -v in CMD)
+   - Make sure you did NOT close the command window
+   - Make sure you are visiting http://localhost:3000
+     (not https, and no www)
+   - If port 3000 is busy, check the command window for
+     a different port number shown after "Local:"
+
+=====================================================
+   Built by: Arin Harwani
+   Developer Key: LOGICSNAP-DEMO
+=====================================================
