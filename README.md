@@ -2,11 +2,14 @@
 
 ## 🏁 JUDGES: Quick Start
 
-1. Create a `.env` file in the root directory (copy `.env.example` and ask the author for the keys)
-2. Run `npm install`
-3. Seed demo data: `node scripts/seed-demo.js`
-4. Start the app: `npm run dev`
-5. Open **http://localhost:3000** → click **"🔐 Developer Access"** → enter key: **`LOGICSNAP-DEMO`**
+1. Ensure you have Node.js v18+ installed.
+2. In the project root, run:
+   ```bash
+   npm run judge-setup
+   ```
+3. When prompted, enter the **Setup Password** provided to you by the team.
+   *(This will securely decrypt the keys, install dependencies, seed demo data, and start the app automatically).*
+4. Open **http://localhost:3000** → click **"🔐 Developer Access"** → enter developer key: **`LOGICSNAP-DEMO`**
 
 ---
 
@@ -74,22 +77,15 @@ The public-facing site is a normal cafe website. To access the developer dashboa
 git clone <repo-url>
 cd logic-snap
 
-# 2. Install dependencies
-npm install
+# 2. Run the secure setup utility
+npm run judge-setup
 
-# 3. Configure environment variables
-#    → Copy .env.example to .env
-#    → Obtain the required keys from the repository owner
-cp .env.example .env
-
-# 4. Seed demo data (required for full feature demo)
-node scripts/seed-demo.js
-
-# 5. Start the development server
-npm run dev
+# 3. Enter the setup password
+#    → The script will auto-decrypt the `.env` keys, 
+#      install dependencies, seed data, and start the server.
 ```
 
-> 📋 **Note:** You must obtain the environment variables directly from the author as they are not included in the repository for security.
+> 📋 **Note:** You must obtain the **Setup Password** directly from the author. API keys are safely encrypted out of plain text.
 
 Open [http://localhost:3000](http://localhost:3000) to see the cafe homepage.
 

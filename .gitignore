@@ -5,6 +5,9 @@
 JUDGES_KEYS.txt
 JUDGE_SETUP.bat
 
+# Allow encrypted secrets
+!secrets.enc
+
 # Dependencies
 node_modules/
 
