@@ -14,7 +14,7 @@ export async function GET() {
     try {
         const adminSupabase = createClient(
             process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://xseubadkltyupttwlxjx.supabase.co',
-            process.env.SUPABASE_SERVICE_KEY
+            process.env.SUPABASE_SERVICE_KEY || ''
         );
 
         const { data: projects } = await adminSupabase.from('projects').select('id').limit(1);

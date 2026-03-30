@@ -23,7 +23,7 @@ export async function POST(request: Request) {
         // Use admin client to bypass RLS and auto-resolve project ID
         const adminSupabase = createClient(
             process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://xseubadkltyupttwlxjx.supabase.co',
-            process.env.SUPABASE_SERVICE_KEY
+            process.env.SUPABASE_SERVICE_KEY || ''
         );
 
         const { data: projects } = await adminSupabase.from('projects').select('id').limit(1);

@@ -13,7 +13,7 @@ export async function POST(request: Request) {
 
         const adminSupabase = createClient(
             process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://xseubadkltyupttwlxjx.supabase.co',
-            process.env.SUPABASE_SERVICE_KEY
+            process.env.SUPABASE_SERVICE_KEY || ''
         );
 
         const { data: projects } = await adminSupabase.from('projects').select('id').limit(1);
@@ -61,7 +61,7 @@ export async function POST(request: Request) {
 export async function DELETE() {
     const adminSupabase = createClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://xseubadkltyupttwlxjx.supabase.co',
-        process.env.SUPABASE_SERVICE_KEY
+        process.env.SUPABASE_SERVICE_KEY || ''
     );
     await adminSupabase.from('rules').delete().ilike('name', '%LIVE SURGE:%');
     return NextResponse.json({ success: true });

@@ -19,7 +19,7 @@ export async function POST(request: Request) {
         const { createClient } = require('@supabase/supabase-js');
         const adminSupabase = createClient(
             process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://xseubadkltyupttwlxjx.supabase.co',
-            process.env.SUPABASE_SERVICE_KEY
+            process.env.SUPABASE_SERVICE_KEY || ''
         );
 
         const { data: activeRules } = await adminSupabase
