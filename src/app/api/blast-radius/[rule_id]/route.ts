@@ -8,9 +8,9 @@ import { supabase } from '@/lib/supabase';
  * to find overlapping data keys (e.g., if Rule A and Rule B both modify "cart_total" 
  * or check "user.age").
  */
-export async function GET(request: Request, context: { params: { rule_id: string } }) {
+export async function GET(request: Request, context: { params: Promise<{ rule_id: string }> }) {
     try {
-        const ruleId = context.params.rule_id;
+        const { rule_id: ruleId } = await context.params;
         const apiKey = request.headers.get('x-api-key');
 
         // In a real edge app, we'd enforce the apiKey to match the RLS.

@@ -49,8 +49,28 @@ export async function POST(request: Request) {
 
     const completePrompt = `${systemInstruction}\n\nUser Input: ${prompt}\nOutput JSON:`;
 
-    const result = await model.generateContent(completePrompt);
-    const responseText = result.response.text();
+    let responseText;
+    try {
+      const result = await model.generateContent(completePrompt);
+      responseText = result.response.text();
+    } catch (primaryError: any) {
+      console.warn("[API Generate] Primary key failed, trying fallback...", primaryError.message);
+      const fallbackKey = process.env.GEMINI_API_KEY_FALLBACK;
+
+      if (fallbackKey) {
+        const fallbackGenAI = new GoogleGenerativeAI(fallbackKey);
+        const fallbackModel = fallbackGenAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+        try {
+          const fallbackResult = await fallbackModel.generateContent(completePrompt);
+          responseText = fallbackResult.response.text();
+        } catch (fallbackError: any) {
+          console.error("[API Generate] Fallback key also failed:", fallbackError.message);
+          throw fallbackError; // If fallback fails too, bubble it up
+        }
+      } else {
+        throw primaryError; // No fallback available, throw original error
+      }
+    }
 
     // Try to safely extract JSON if Gemini accidentally includes markdown code blocks
     let cleanedJson = responseText.trim();
@@ -74,7 +94,7 @@ export async function POST(request: Request) {
     // Initialize Supabase admin client to insert rule
     const { createClient } = require('@supabase/supabase-js');
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://xseubadkltyupttwlxjx.supabase.co';
-    const supabaseKey = process.env.SUPABASE_SERVICE_KEY;
+    const supabaseKey = process.env.SUPABASE_SERVICE_KEY || '';
     const supabase = createClient(supabaseUrl, supabaseKey);
 
     // Grab the first project ID to attach to the rule
